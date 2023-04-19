@@ -9,6 +9,11 @@ import { FormControl } from '@angular/forms';
 export class BasicFormComponent implements OnInit {
 
   nameField = new FormControl('Soy un control');
+  emailField = new FormControl('example@email');
+  phoneField = new FormControl('12345678');
+  colorField = new FormControl('#000000');
+  dateField = new FormControl();
+  numberField = new FormControl(12);
 
   constructor() { }
 
