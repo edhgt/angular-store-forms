@@ -34,4 +34,12 @@ export class BasicFormComponent implements OnInit {
     console.log(this.nameField.value);
   }
 
+  get isNameFieldValid() {
+    return this.nameField.touched && this.nameField.invalid;
+  }
+
+  get isNameFieldInvalid() {
+    return this.nameField.touched && this.nameField.invalid;
+  }
+
 }
