@@ -8,7 +8,7 @@ import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms'
 })
 export class BasicFormComponent implements OnInit {
 
-  form: FormGroup
+  form: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder
@@ -17,23 +17,26 @@ export class BasicFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.nameField.valueChanges
-    .subscribe(value => {
-      console.log(value);
-    });
-
-    this.form.valueChanges
-    .subscribe(value => {
-      console.log(value);
-    });
+    // this.nameField.valueChanges
+    // .subscribe(value => {
+    //   console.log(value);
+    // });
+    // this.form.valueChanges
+    // .subscribe(value => {
+    //   console.log(value);
+    // });
   }
 
   getNameValue() {
     console.log(this.nameField.value);
   }
 
+  getLastValue() {
+    console.log(this.lastField.value);
+  }
+
   save(event) {
-    if(this.form.valid) {
+    if (this.form.valid){
       console.log(this.form.value);
     } else {
       this.form.markAllAsTouched();
@@ -42,46 +45,53 @@ export class BasicFormComponent implements OnInit {
 
   private buildForm() {
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(10)]],
-      email: [''],
+      fullname: this.formBuilder.group({
+        name: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(/^[a-zA-Z ]+$/)]],
+        last: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(/^[a-zA-Z ]+$/)]]
+      }),
+      email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
       color: ['#000000'],
       date: [''],
-      age: [12],
+      age: [18, [Validators.required, Validators.min(18), Validators.max(100)]],
       category: [''],
       tag: [''],
-      agree: [false],
+      agree: [false, [Validators.requiredTrue]],
       gender: [''],
       zone: [''],
     });
   }
 
   get nameField() {
-    return this.form.get('name');
+    return this.form.get('fullname').get('name');
   }
-
+  
   get isNameFieldValid() {
     return this.nameField.touched && this.nameField.valid;
   }
-
+  
   get isNameFieldInvalid() {
     return this.nameField.touched && this.nameField.invalid;
   }
+  
+  get lastField() {
+    return this.form.get('fullname.last');
+  }
 
+  get isLastFieldValid() {
+    return this.lastField.touched && this.lastField.valid;
+  }
+  
+  get isLastFieldInvalid() {
+    return this.lastField.touched && this.lastField.invalid;
+  }
+  
   get emailField() {
     return this.form.get('email');
   }
 
   get phoneField() {
     return this.form.get('phone');
-  }
-
-  get isPhoneFieldValid() {
-    return this.phoneField.touched && this.phoneField.valid;
-  }
-
-  get isPhoneFieldInValid() {
-    return this.phoneField.touched && this.phoneField.invalid;
   }
 
   get colorField() {

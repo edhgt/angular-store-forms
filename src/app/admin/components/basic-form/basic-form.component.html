@@ -1,49 +1,116 @@
 <form [formGroup]="form" (ngSubmit)="save($event)">
-  <p>
-    Name: {{ nameField.value }} {{ nameField.valid }}
-    <input
-      [class.is-valid]="isNameFieldValid"
-      [class.is-invalid]="isNameFieldInvalid"
-      type="text"
-      formControlName="name"
-    />
-    <button [disabled]="nameField.invalid" (click)="getNameValue()">
-      Get value
-    </button>
-  </p>
-  <div class="messages" [class.active]="isNameFieldInvalid">
+  <div formGroupName="fullname">
     <p>
-      <strong *ngIf="nameField.touched && nameField.hasError('required')"
-        >Este campo es requerido</strong
-      >
+      Name: {{ nameField.value }} {{ nameField.valid }}
+      <input
+        [class.is-valid]="isNameFieldValid"
+        [class.is-invalid]="isNameFieldInvalid"
+        type="text"
+        formControlName="name"
+      />
+      <button [disabled]="nameField.invalid" (click)="getNameValue()">
+        Get value
+      </button>
     </p>
+    <div class="messages" [class.active]="isNameFieldInvalid">
+      <p>
+        <strong *ngIf="nameField.hasError('required')"
+          >Este campo es requerido</strong
+        >
+      </p>
+      <p>
+        <strong *ngIf="nameField.hasError('maxlength')"
+          >debe tener maximo 10 c</strong
+        >
+      </p>
+      <p>
+        <strong *ngIf="nameField.hasError('pattern')"
+          >No debe tener carac..</strong
+        >
+      </p>
+    </div>
     <p>
-      <strong *ngIf="nameField.touched && nameField.hasError('maxlength')"
-        >debe tener maximo 10 c</strong
-      >
+      Last: {{ lastField.value }} {{ lastField.valid }}
+      <input
+        [class.is-valid]="isLastFieldValid"
+        [class.is-invalid]="isLastFieldInvalid"
+        type="text"
+        formControlName="last"
+      />
+      <button [disabled]="lastField.invalid" (click)="getLastValue()">
+        Get value
+      </button>
     </p>
+    <div class="messages" [class.active]="isLastFieldInvalid">
+      <p>
+        <strong *ngIf="lastField.hasError('required')"
+          >Este campo es requerido</strong
+        >
+      </p>
+      <p>
+        <strong *ngIf="lastField.hasError('maxlength')"
+          >debe tener maximo 10 c</strong
+        >
+      </p>
+      <p>
+        <strong *ngIf="lastField.hasError('pattern')"
+          >No debe tener carac..</strong
+        >
+      </p>
+    </div>
   </div>
   <p>
     Email: {{ emailField.value }}
     <input type="email" formControlName="email" />
   </p>
+  <div
+    class="messages"
+    [class.active]="emailField.touched && phoneField.invalid"
+  >
+    <p>
+      <strong *ngIf="emailField.hasError('required')">
+        Este campo es requerido
+      </strong>
+    </p>
+    <p>
+      <strong *ngIf="emailField.hasError('email')">
+        Esto no es un emial valido
+      </strong>
+    </p>
+  </div>
+  <p>
+    Age: {{ ageField.value }}
+    <input type="number" formControlName="age" />
+  </p>
+  <div class="messages" [class.active]="ageField.touched && ageField.invalid">
+    <p>
+      <strong *ngIf="ageField.hasError('required')"
+        >Este campo es requerido</strong
+      >
+    </p>
+    <p>
+      <strong *ngIf="ageField.hasError('min')">Debe ser mayor de edad</strong>
+    </p>
+    <p>
+      <strong *ngIf="ageField.hasError('max')"
+        >Debe ser menor de 100 años</strong
+      >
+    </p>
+  </div>
   <p>
     Phone: {{ phoneField.value }}
-    <input
-      [class.is-valid]="isNameFieldValid"
-      [class.is-invalid]="isNameFieldInvalid"
-      type="tel"
-      formControlName="phone"
-    />
+    <input type="tel" formControlName="phone" />
   </p>
-  <div class="messages" [class.active]="isPhoneFieldInValid">
+  <div
+    class="messages"
+    [class.active]="phoneField.touched && phoneField.invalid"
+  >
     <p>
-      <strong *ngIf="nameField.touched && nameField.hasError('required')"
+      <strong *ngIf="phoneField.touched && phoneField.hasError('required')"
         >Este campo es requerido</strong
       >
     </p>
   </div>
-
   <p>
     Color: {{ colorField.value }}
     <input type="color" formControlName="color" />
